@@ -15,12 +15,12 @@ Welcome to Phase 1! In this phase, you'll set up Prometheus and Grafana and crea
 
 1. **Start the services**
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
 2. **Access the services**
    - **Prometheus**: http://localhost:9090
-   - **Grafana**: http://localhost:3000
+   - **Grafana**: http://localhost:3001 (using port 3001 to avoid conflicts)
      - Username: `admin`
      - Password: `admin`
 
@@ -30,7 +30,7 @@ Welcome to Phase 1! In this phase, you'll set up Prometheus and Grafana and crea
    - You should see `prometheus` target is UP
 
 4. **Verify Grafana is working**
-   - Go to http://localhost:3000
+   - Go to http://localhost:3001
    - Login with admin/admin
    - Go to "Configuration" → "Data Sources"
    - You should see "Prometheus" data source is configured
@@ -91,7 +91,7 @@ Try these queries in Prometheus:
 - `rate(prometheus_http_requests_total[5m])` - Rate of requests per second
 
 ### Exercise 3: Create Your First Dashboard
-1. Go to Grafana (http://localhost:3000)
+1. Go to Grafana (http://localhost:3001)
 2. Click "+" → "Create" → "Dashboard"
 3. Click "Add visualization"
 4. Select "Prometheus" as data source
@@ -111,16 +111,26 @@ By the end of Phase 1, you should:
 ## 🔍 Troubleshooting
 
 **Prometheus not starting?**
-- Check logs: `docker-compose logs prometheus`
+- Check logs: `docker compose logs prometheus`
 - Verify `prometheus.yml` syntax
 
 **Grafana can't connect to Prometheus?**
-- Check if Prometheus is running: `docker-compose ps`
+- Check if Prometheus is running: `docker compose ps`
 - Verify network: Both services should be on `monitoring` network
 
 **Dashboards not showing?**
-- Check Grafana logs: `docker-compose logs grafana`
+- Check Grafana logs: `docker compose logs grafana`
 - Verify dashboard files are in `grafana/dashboards/`
+
+**To stop services:**
+```bash
+docker compose down
+```
+
+**To view logs:**
+```bash
+docker compose logs -f
+```
 
 ## 🎯 Next Steps
 
@@ -134,4 +144,5 @@ Once you're comfortable with Phase 1:
 - [Prometheus Documentation](https://prometheus.io/docs/)
 - [Grafana Documentation](https://grafana.com/docs/)
 - [PromQL Basics](https://prometheus.io/docs/prometheus/latest/querying/basics/)
+
 

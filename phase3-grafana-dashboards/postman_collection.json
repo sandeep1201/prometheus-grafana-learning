@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "sample-app-metrics-collection",
+		"name": "Sample App with Prometheus Metrics",
+		"description": "Postman collection for Phase 2 - Application Metrics. Use this collection to test the sample Node.js application and generate metrics data.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Basic Endpoints",
+			"item": [
+				{
+					"name": "Home",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Get home page with available endpoints information"
+					},
+					"response": []
+				},
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/health",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"health"
+							]
+						},
+						"description": "Check application health status"
+					},
+					"response": []
+				},
+				{
+					"name": "Prometheus Metrics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/metrics",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"metrics"
+							]
+						},
+						"description": "Get Prometheus metrics in raw format. This endpoint is scraped by Prometheus to collect metrics."
+					},
+					"response": []
+				}
+			],
+			"description": "Basic endpoints for health checks and metrics"
+		},
+		{
+			"name": "API Endpoints",
+			"item": [
+				{
+					"name": "Get Data",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/data",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"data"
+							]
+						},
+						"description": "Get sample data. This endpoint simulates processing time (0-200ms) to generate latency metrics."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Data",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Sample Item\",\n  \"description\": \"This is a sample item\",\n  \"value\": 42\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/data",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"data"
+							]
+						},
+						"description": "Create new data. This will generate POST request metrics."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Data - Alternative Payload",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Another Item\",\n  \"type\": \"product\",\n  \"price\": 99.99,\n  \"inStock\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/data",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"data"
+							]
+						},
+						"description": "Alternative payload example for creating data"
+					},
+					"response": []
+				}
+			],
+			"description": "API endpoints for data operations"
+		},
+		{
+			"name": "Custom Metrics",
+			"item": [
+				{
+					"name": "Update Cart - User 123",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"items\": 5\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/cart/user123",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"cart",
+								"user123"
+							]
+						},
+						"description": "Update cart for user123. This updates the custom business metric 'items_in_cart' with label user_id=user123."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Cart - User 456",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"items\": 12\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/cart/user456",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"cart",
+								"user456"
+							]
+						},
+						"description": "Update cart for user456. This updates the custom business metric 'items_in_cart' with label user_id=user456."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Cart - User 789",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"items\": 3\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/cart/user789",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"cart",
+								"user789"
+							]
+						},
+						"description": "Update cart for user789. This updates the custom business metric 'items_in_cart' with label user_id=user789."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Cart - Empty Cart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"items\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/cart/user123",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"cart",
+								"user123"
+							]
+						},
+						"description": "Empty cart for user123 (set items to 0). Demonstrates gauge metric can decrease."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints to update custom business metrics (gauge)"
+		},
+		{
+			"name": "Generate Load",
+			"item": [
+				{
+					"name": "Run All - Generate Metrics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/data",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"data"
+							]
+						},
+						"description": "Use Postman's Collection Runner to run this multiple times to generate load and metrics. Or use the Runner feature to execute all requests multiple times."
+					},
+					"response": []
+				}
+			],
+			"description": "Use this to generate load and metrics. Run requests multiple times using Postman's Collection Runner."
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:4000",
+			"type": "string"
+		}
+	]
+}
+

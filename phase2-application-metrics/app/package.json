@@ -1,0 +1,24 @@
+{
+  "name": "sample-app-with-metrics",
+  "version": "1.0.0",
+  "description": "Sample Node.js application with Prometheus metrics",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "keywords": [
+    "prometheus",
+    "metrics",
+    "monitoring",
+    "nodejs"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "prom-client": "^15.1.0"
+  }
+}
+

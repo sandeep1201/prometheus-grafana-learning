@@ -1,5 +1,5 @@
 # Prometheus Configuration File
-# Phase 1: Setup & Basics
+# Phase 2: Application Metrics
 
 global:
   scrape_interval: 15s      # How often to scrape targets
@@ -10,16 +10,19 @@ global:
 
 # Scrape configurations
 scrape_configs:
-  # Scrape Prometheus itself (default metrics)
+  # Scrape Prometheus itself
   - job_name: 'prometheus'
     static_configs:
       - targets: ['localhost:9090']
         labels:
           instance: 'prometheus-server'
 
-  # Optional: Scrape Grafana metrics (if exposed)
-  # - job_name: 'grafana'
-  #   static_configs:
-  #     - targets: ['grafana:3000']
-
+  # Scrape our sample application
+  - job_name: 'sample-app'
+    static_configs:
+      - targets: ['app:4000']  # Docker service name
+        labels:
+          instance: 'sample-application'
+          app: 'sample-app'
+          phase: 'phase2'
 

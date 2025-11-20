@@ -13,19 +13,20 @@ This project is structured as a series of phases, each building upon the previou
 - Create your first Grafana dashboard
 - Understand PromQL basics
 
-### Phase 2: Application Metrics 🚧
+### Phase 2: Application Metrics ✅
 - Instrument a Node.js application with metrics
 - Add custom metrics (counters, gauges, histograms)
-- Expose metrics endpoint
+- Expose /metrics endpoint
 - Configure Prometheus to scrape application
 - View metrics in Prometheus
 
-### Phase 3: Grafana Dashboards 🚧
+### Phase 3: Grafana Dashboards ✅
 - Build comprehensive dashboards
-- Create different panel types
+- Create different panel types (Time Series, Stat, Gauge, Table, Heatmap)
 - Use PromQL queries for visualization
-- Add dashboard variables
+- Add dashboard variables (Method, Route, Status Code)
 - Dashboard best practices
+- Pre-built dashboard with all panel types included
 
 ### Phase 4: Alerting 🚧
 - Set up Prometheus Alertmanager
@@ -66,12 +67,12 @@ This project is structured as a series of phases, each building upon the previou
 2. **Start Phase 1**
    ```bash
    cd phase1-setup-basics
-   docker-compose up -d
+   docker compose up -d
    ```
 
 3. **Access the services**
    - Prometheus: http://localhost:9090
-   - Grafana: http://localhost:3000 (default: admin/admin)
+   - Grafana: http://localhost:3001 (default: admin/admin)
 
 ## 📖 Phase Guide
 
@@ -111,4 +112,5 @@ This is a learning project! Feel free to:
 ## 📄 License
 
 MIT
+
 

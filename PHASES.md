@@ -28,67 +28,77 @@ This document tracks your learning journey through Prometheus and Grafana. Each 
 **Run it**:
 ```bash
 cd phase1-setup-basics
-docker-compose up -d
+docker compose up -d
 ```
 
 ---
 
-## Phase 2: Application Metrics 🚧
+## Phase 2: Application Metrics ✅
 
 **Goal**: Add custom metrics to an application
 
 **What you'll learn**:
-- Instrumenting Node.js applications
+- Instrumenting Node.js applications with prom-client
 - Custom metric types (Counter, Gauge, Histogram)
 - Exposing /metrics endpoint
 - Configuring Prometheus scraping
 - Labeling and metadata
 
 **Key Concepts**:
-- **Prometheus Client** - Library for instrumenting apps
-- **Counter** - Monotonically increasing metric
-- **Gauge** - Value that goes up and down
-- **Histogram** - Distribution of measurements
-- **Labels** - Key-value pairs for filtering
+- **prom-client** - Prometheus client library for Node.js
+- **Counter** - Monotonically increasing metric (total requests)
+- **Gauge** - Value that goes up and down (active connections)
+- **Histogram** - Distribution of measurements (request latency)
+- **Labels** - Key-value pairs for filtering (method, route, status_code)
+- **Registry** - Collection of metrics
+- **/metrics endpoint** - Exposes metrics in Prometheus format
 
 **Files**:
-- `phase2-application-metrics/app/`
-- `phase2-application-metrics/prometheus/prometheus.yml`
+- `phase2-application-metrics/app/src/index.js` - Express app with metrics
+- `phase2-application-metrics/prometheus/prometheus.yml` - Scrape configuration
 
 **Run it**:
 ```bash
 cd phase2-application-metrics
-docker-compose up -d
+docker compose up -d
 ```
 
 ---
 
-## Phase 3: Grafana Dashboards 🚧
+## Phase 3: Grafana Dashboards ✅
 
 **Goal**: Build comprehensive dashboards in Grafana
 
 **What you'll learn**:
 - Creating dashboards in Grafana
-- Panel types (Graph, Stat, Table, Gauge)
+- Panel types (Time Series, Stat, Table, Gauge, Heatmap)
 - Writing PromQL queries
 - Dashboard variables and templating
 - Best practices for dashboards
 
 **Key Concepts**:
 - **Dashboards** - Collections of panels
-- **Panels** - Individual visualizations
-- **Variables** - Dynamic dashboard filtering
-- **PromQL** - Querying metrics
-- **Visualization** - Graphs, gauges, heatmaps
+- **Panels** - Individual visualizations (graphs, gauges, tables, heatmaps)
+- **Variables** - Dynamic dashboard filtering (method, route, status_code)
+- **PromQL** - Querying metrics (rate, histogram_quantile, label_values)
+- **Visualization** - Choosing the right panel type for the metric
 
 **Files**:
-- `phase3-grafana-dashboards/grafana/dashboards/`
-- `phase3-grafana-dashboards/grafana/provisioning/`
+- `phase3-grafana-dashboards/grafana/dashboards/application-metrics.json` - Pre-built dashboard
+- `phase3-grafana-dashboards/grafana/provisioning/` - Auto-provisioning config
+
+**Pre-built Dashboard Includes**:
+- Gauge panel (Request Rate)
+- Stat panel (Active Connections)
+- Time series graphs (Request Rate, Latency)
+- Table panels (Status Codes, Business Metrics)
+- Heatmap (Request Duration Distribution)
+- Dashboard variables (Method, Route, Status Code)
 
 **Run it**:
 ```bash
 cd phase3-grafana-dashboards
-docker-compose up -d
+docker compose up -d
 ```
 
 ---
@@ -118,7 +128,7 @@ docker-compose up -d
 **Run it**:
 ```bash
 cd phase4-alerting
-docker-compose up -d
+docker compose up -d
 ```
 
 ---
@@ -148,7 +158,7 @@ docker-compose up -d
 **Run it**:
 ```bash
 cd phase5-advanced-features
-docker-compose up -d
+docker compose up -d
 ```
 
 ---
@@ -176,4 +186,5 @@ docker-compose up -d
 - [ ] Phase 3: Grafana Dashboards
 - [ ] Phase 4: Alerting
 - [ ] Phase 5: Advanced Features
+
 
