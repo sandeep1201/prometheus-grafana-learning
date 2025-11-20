@@ -1,0 +1,24 @@
+# Prometheus Configuration File
+# Phase 1: Setup & Basics
+
+global:
+  scrape_interval: 15s      # How often to scrape targets
+  evaluation_interval: 15s  # How often to evaluate alert rules
+  external_labels:
+    cluster: 'learning-cluster'
+    environment: 'development'
+
+# Scrape configurations
+scrape_configs:
+  # Scrape Prometheus itself (default metrics)
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          instance: 'prometheus-server'
+
+  # Optional: Scrape Grafana metrics (if exposed)
+  # - job_name: 'grafana'
+  #   static_configs:
+  #     - targets: ['grafana:3000']
+
