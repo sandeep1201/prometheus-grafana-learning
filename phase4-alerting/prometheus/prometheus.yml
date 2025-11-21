@@ -1,5 +1,5 @@
 # Prometheus Configuration File
-# Phase 2: Application Metrics
+# Phase 4: Alerting
 
 global:
   scrape_interval: 15s      # How often to scrape targets
@@ -7,6 +7,17 @@ global:
   external_labels:
     cluster: 'learning-cluster'
     environment: 'development'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+            - alertmanager:9093
+
+# Load alert rules
+rule_files:
+  - '/etc/prometheus/alerts.yml'
 
 # Scrape configurations
 scrape_configs:
@@ -24,6 +35,5 @@ scrape_configs:
         labels:
           instance: 'sample-application'
           app: 'sample-app'
-          phase: 'phase2'
-
+          phase: 'phase4'
 

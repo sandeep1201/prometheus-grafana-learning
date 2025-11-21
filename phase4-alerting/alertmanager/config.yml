@@ -1,0 +1,102 @@
+# Alertmanager Configuration
+# Phase 4: Alerting
+
+global:
+  # Default notification settings
+  resolve_timeout: 5m
+  # Uncomment and configure if you want to send emails
+  # smtp_smarthost: 'smtp.gmail.com:587'
+  # smtp_from: 'alerts@example.com'
+  # smtp_auth_username: 'your-email@gmail.com'
+  # smtp_auth_password: 'your-app-password'
+
+# Route tree for alert routing
+route:
+  # Default receiver
+  receiver: 'default'
+  
+  # Group alerts by these labels
+  group_by: ['alertname', 'cluster', 'service']
+  
+  # Wait time before sending first notification
+  group_wait: 10s
+  
+  # Wait time before sending notification about new alerts in the same group
+  group_interval: 10s
+  
+  # Minimum time between two notifications for the same group
+  repeat_interval: 12h
+  
+  # Child routes (more specific routing)
+  routes:
+    # Critical alerts go to critical receiver
+    - match:
+        severity: critical
+      receiver: 'critical'
+      continue: true
+    
+    # Warning alerts go to warning receiver
+    - match:
+        severity: warning
+      receiver: 'warning'
+      continue: true
+
+# Inhibition rules (suppress certain alerts when others are firing)
+inhibit_rules:
+  # If ApplicationDown is firing, inhibit other alerts
+  - source_match:
+      severity: 'critical'
+      alertname: 'ApplicationDown'
+    target_match:
+      severity: 'warning'
+    equal: ['instance']
+
+# Receivers (where alerts are sent)
+receivers:
+  # Default receiver - logs to console (for development)
+  - name: 'default'
+    webhook_configs:
+      - url: 'http://localhost:5001/webhook'
+        send_resolved: true
+    # For production, you would use:
+    # email_configs:
+    #   - to: 'team@example.com'
+    #     headers:
+    #       Subject: '{{ .GroupLabels.alertname }}'
+
+  # Critical alerts receiver
+  - name: 'critical'
+    webhook_configs:
+      - url: 'http://localhost:5001/webhook'
+        send_resolved: true
+    # For production:
+    # email_configs:
+    #   - to: 'oncall@example.com'
+    #     headers:
+    #       Subject: '🚨 CRITICAL: {{ .GroupLabels.alertname }}'
+    # slack_configs:
+    #   - api_url: 'YOUR_SLACK_WEBHOOK_URL'
+    #     channel: '#alerts-critical'
+    #     title: '🚨 Critical Alert'
+    #     text: '{{ range .Alerts }}{{ .Annotations.description }}{{ end }}'
+
+  # Warning alerts receiver
+  - name: 'warning'
+    webhook_configs:
+      - url: 'http://localhost:5001/webhook'
+        send_resolved: true
+    # For production:
+    # email_configs:
+    #   - to: 'team@example.com'
+    #     headers:
+    #       Subject: '⚠️ WARNING: {{ .GroupLabels.alertname }}'
+    # slack_configs:
+    #   - api_url: 'YOUR_SLACK_WEBHOOK_URL'
+    #     channel: '#alerts-warning'
+    #     title: '⚠️ Warning Alert'
+    #     text: '{{ range .Alerts }}{{ .Annotations.description }}{{ end }}'
+
+# Templates for customizing alert messages
+templates:
+  - '/etc/alertmanager/templates/*.tmpl'
+

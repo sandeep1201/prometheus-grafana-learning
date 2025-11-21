@@ -103,7 +103,7 @@ docker compose up -d
 
 ---
 
-## Phase 4: Alerting 🚧
+## Phase 4: Alerting ✅
 
 **Goal**: Set up alerting with Prometheus and Grafana
 
@@ -122,14 +122,27 @@ docker compose up -d
 - **Silencing** - Temporarily disable alerts
 
 **Files**:
-- `phase4-alerting/prometheus/alerts.yml`
-- `phase4-alerting/alertmanager/config.yml`
+- `phase4-alerting/prometheus/alerts.yml` - Alert rule definitions
+- `phase4-alerting/alertmanager/config.yml` - Alertmanager routing configuration
+- `phase4-alerting/README.md` - Comprehensive guide
+- `phase4-alerting/ALERT_TESTING_GUIDE.md` - Testing guide
+
+**Alert Rules Included**:
+- High Latency (p95, p99, average)
+- High Error Rate (5xx, 4xx)
+- Application Health (down, no traffic, high connections)
+- Request Rate (sudden drops, spikes)
 
 **Run it**:
 ```bash
 cd phase4-alerting
 docker compose up -d
 ```
+
+**Access Points**:
+- Prometheus: http://localhost:9090/alerts
+- Alertmanager: http://localhost:9093
+- Grafana: http://localhost:3001
 
 ---
 
@@ -181,10 +194,10 @@ docker compose up -d
 
 ## Progress Tracking
 
-- [ ] Phase 1: Setup & Basics
-- [ ] Phase 2: Application Metrics
-- [ ] Phase 3: Grafana Dashboards
-- [ ] Phase 4: Alerting
+- [x] Phase 1: Setup & Basics
+- [x] Phase 2: Application Metrics
+- [x] Phase 3: Grafana Dashboards
+- [x] Phase 4: Alerting
 - [ ] Phase 5: Advanced Features
 
 

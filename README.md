@@ -28,12 +28,12 @@ This project is structured as a series of phases, each building upon the previou
 - Dashboard best practices
 - Pre-built dashboard with all panel types included
 
-### Phase 4: Alerting 🚧
+### Phase 4: Alerting ✅
 - Set up Prometheus Alertmanager
-- Create alert rules
+- Create alert rules (latency, errors, health, traffic)
 - Configure notification channels
 - Test alerts
-- Grafana alerting
+- Alert routing and grouping
 
 ### Phase 5: Advanced Features 🚧
 - Service discovery
@@ -91,9 +91,9 @@ By the end of this journey, you'll know how to:
 - ✅ Create and manage Grafana dashboards
 - ✅ Instrument applications with custom metrics
 - ✅ Write PromQL queries
-- ✅ Set up alerting and notifications
-- ✅ Monitor multiple services
-- ✅ Use best practices for observability
+- ✅ Set up alerting and notifications (Phase 4)
+- ⏳ Monitor multiple services
+- ⏳ Use best practices for observability
 
 ## 📚 Learning Resources
 

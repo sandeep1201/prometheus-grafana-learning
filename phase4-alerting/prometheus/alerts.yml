@@ -1,0 +1,147 @@
+# Alert Rules for Prometheus
+# Phase 4: Alerting
+
+groups:
+  # Group 1: High Latency Alerts
+  - name: high_latency
+    interval: 30s
+    rules:
+      # Alert: High p95 Latency
+      - alert: HighP95Latency
+        expr: |
+          histogram_quantile(0.95,
+            sum(rate(http_request_duration_seconds_bucket{job="sample-app"}[5m])) by (le, method, route)
+          ) > 0.5
+        for: 2m
+        labels:
+          severity: warning
+          component: latency
+        annotations:
+          summary: "High p95 latency detected"
+          description: "p95 latency is {{ $value }}s for {{ $labels.method }} {{ $labels.route }} (threshold: 0.5s)"
+
+      # Alert: High p99 Latency
+      - alert: HighP99Latency
+        expr: |
+          histogram_quantile(0.99,
+            sum(rate(http_request_duration_seconds_bucket{job="sample-app"}[5m])) by (le, method, route)
+          ) > 1.0
+        for: 2m
+        labels:
+          severity: critical
+          component: latency
+        annotations:
+          summary: "Critical p99 latency detected"
+          description: "p99 latency is {{ $value }}s for {{ $labels.method }} {{ $labels.route }} (threshold: 1.0s)"
+
+      # Alert: Average Latency Too High
+      - alert: HighAverageLatency
+        expr: |
+          rate(http_request_duration_seconds_sum{job="sample-app"}[5m]) /
+          rate(http_request_duration_seconds_count{job="sample-app"}[5m]) > 0.3
+        for: 3m
+        labels:
+          severity: warning
+          component: latency
+        annotations:
+          summary: "High average latency detected"
+          description: "Average latency is {{ $value }}s (threshold: 0.3s)"
+
+  # Group 2: High Error Rate Alerts
+  - name: high_error_rate
+    interval: 30s
+    rules:
+      # Alert: High Error Rate (5xx status codes)
+      - alert: HighErrorRate
+        expr: |
+          sum(rate(http_requests_total{job="sample-app",status_code=~"5.."}[5m])) /
+          sum(rate(http_requests_total{job="sample-app"}[5m])) > 0.05
+        for: 2m
+        labels:
+          severity: critical
+          component: errors
+        annotations:
+          summary: "High error rate detected"
+          description: "Error rate is {{ $value | humanizePercentage }} (threshold: 5%)"
+
+      # Alert: Too Many 4xx Errors
+      - alert: High4xxErrorRate
+        expr: |
+          sum(rate(http_requests_total{job="sample-app",status_code=~"4.."}[5m])) /
+          sum(rate(http_requests_total{job="sample-app"}[5m])) > 0.1
+        for: 3m
+        labels:
+          severity: warning
+          component: errors
+        annotations:
+          summary: "High 4xx error rate detected"
+          description: "4xx error rate is {{ $value | humanizePercentage }} (threshold: 10%)"
+
+  # Group 3: Application Health Alerts
+  - name: application_health
+    interval: 30s
+    rules:
+      # Alert: Application Down
+      - alert: ApplicationDown
+        expr: up{job="sample-app"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: availability
+        annotations:
+          summary: "Application is down"
+          description: "The sample-app application has been down for more than 1 minute"
+
+      # Alert: No Requests Received
+      - alert: NoRequestsReceived
+        expr: |
+          rate(http_requests_total{job="sample-app"}[5m]) == 0
+        for: 5m
+        labels:
+          severity: warning
+          component: traffic
+        annotations:
+          summary: "No requests received"
+          description: "The application has not received any requests in the last 5 minutes"
+
+      # Alert: High Active Connections
+      - alert: HighActiveConnections
+        expr: |
+          active_connections{job="sample-app"} > 100
+        for: 2m
+        labels:
+          severity: warning
+          component: connections
+        annotations:
+          summary: "High number of active connections"
+          description: "Active connections: {{ $value }} (threshold: 100)"
+
+  # Group 4: Request Rate Alerts
+  - name: request_rate
+    interval: 30s
+    rules:
+      # Alert: Sudden Drop in Request Rate
+      - alert: SuddenDropInRequestRate
+        expr: |
+          (rate(http_requests_total{job="sample-app"}[5m]) /
+          rate(http_requests_total{job="sample-app"}[15m] offset 5m)) < 0.5
+        for: 2m
+        labels:
+          severity: warning
+          component: traffic
+        annotations:
+          summary: "Sudden drop in request rate"
+          description: "Request rate dropped by more than 50%"
+
+      # Alert: Very High Request Rate
+      - alert: VeryHighRequestRate
+        expr: |
+          sum(rate(http_requests_total{job="sample-app"}[5m])) > 100
+        for: 2m
+        labels:
+          severity: warning
+          component: traffic
+        annotations:
+          summary: "Very high request rate"
+          description: "Request rate is {{ $value }} req/s (threshold: 100 req/s)"
+

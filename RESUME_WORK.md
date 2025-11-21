@@ -13,7 +13,8 @@ I'm working on a progressive Prometheus & Grafana learning project. The repo is 
 - ✅ Phase 1: Setup & Basics (Prometheus + Grafana setup)
 - ✅ Phase 2: Application Metrics (Node.js app with Prometheus metrics, custom counters/gauges/histograms)
 - ✅ Phase 3: Grafana Dashboards (comprehensive dashboard with p50/p95/p99 percentiles, variables, different panel types)
-- 🎯 **Next: Phase 4: Alerting** (Prometheus Alertmanager, alert rules, notifications)
+- ✅ Phase 4: Alerting (Prometheus Alertmanager, alert rules, notification channels, alert routing)
+- 🎯 **Next: Phase 5: Advanced Features** (Service discovery, recording rules, exporters)
 
 **Project Structure:**
 - `phase1-setup-basics/` - Basic Prometheus + Grafana setup
@@ -27,9 +28,9 @@ I'm working on a progressive Prometheus & Grafana learning project. The repo is 
 - Metrics include: http_requests_total, http_request_duration_seconds, active_connections, items_in_cart
 
 **What I want to do next:**
-Continue with Phase 4: Alerting. Help me set up Prometheus Alertmanager, create alert rules (e.g., high latency, high error rate), and configure notification channels.
+Continue with Phase 5: Advanced Features. Help me set up service discovery, recording rules, exporters (Node Exporter), and explore long-term storage options.
 
-Please help me proceed with Phase 4.
+Please help me proceed with Phase 5.
 ```
 
 ## 📝 Short Version
@@ -37,10 +38,10 @@ Please help me proceed with Phase 4.
 ```
 I'm continuing a Prometheus & Grafana learning project. Repo: https://github.com/sandeep1201/prometheus-grafana-learning
 
-**Completed:** Phases 1-3 (Setup, Application Metrics, Grafana Dashboards)
-**Next:** Phase 4: Alerting (Prometheus Alertmanager, alert rules, notifications)
+**Completed:** Phases 1-4 (Setup, Application Metrics, Grafana Dashboards, Alerting)
+**Next:** Phase 5: Advanced Features (Service discovery, recording rules, exporters)
 
-Help me set up Phase 4: Alerting.
+Help me set up Phase 5: Advanced Features.
 ```
 
 ## 🔍 Context Files to Review
@@ -97,12 +98,20 @@ docker compose up -d
 - Percentiles guide and exercises
 - Troubleshooting guide
 
-## 🚀 Next Steps (Phase 4: Alerting)
+### Phase 4: Alerting ✅
+- Prometheus Alertmanager setup
+- Alert rules (high latency, error rate, health, traffic)
+- Alert routing and grouping
+- Notification channel configuration
+- Alert testing guide
 
-1. Set up Prometheus Alertmanager
-2. Create alert rules (e.g., high latency, high error rate)
-3. Configure notification channels
-4. Test alerts
+## 🚀 Next Steps (Phase 5: Advanced Features)
+
+1. Service discovery
+2. Recording rules
+3. Exporters (Node Exporter)
+4. Long-term storage
+5. Multi-service monitoring
 
 ## 🔗 Useful Links
 
@@ -121,5 +130,6 @@ docker compose up -d
 
 ---
 
-**Last Updated**: Phase 3 completed (Grafana Dashboards)
+**Last Updated**: Phase 4 completed (Alerting)
+
 

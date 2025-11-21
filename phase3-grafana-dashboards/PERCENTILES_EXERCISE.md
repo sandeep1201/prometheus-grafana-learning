@@ -305,3 +305,4 @@ rate(http_request_duration_seconds_count[5m])
 
 **Ready to explore?** Start with Exercise 1 and work your way through. Each exercise builds on the previous one!
 
+
